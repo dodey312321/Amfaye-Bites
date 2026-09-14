@@ -1,2 +1,2 @@
 # Amfaye-Bites
-BITE SIZED - LOVE SIZED
+Bite sized - Love Sized
