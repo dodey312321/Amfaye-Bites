@@ -1,0 +1,78 @@
+<!-- CART DRAWER -->
+<div class="fixed inset-0 bg-black/50 z-40 opacity-0 pointer-events-none transition-opacity duration-300" id="cartBackdrop"></div>
+<aside class="fixed z-50 top-0 right-[-100%] sm:right-[-430px] h-screen w-full sm:w-[430px] bg-white p-5 sm:p-[30px] transition-[right] duration-300 ease-in-out flex flex-col shadow-2xl" id="cartDrawer">
+  <div class="flex justify-between items-center border-b border-[#eee] pb-4">
+    <div>
+      <p class="text-[10px] sm:text-xs tracking-[2px] font-bold text-brown uppercase">YOUR ORDER</p>
+      <h2 class="text-brown text-xl sm:text-2xl font-bold">Your Cart</h2>
+    </div>
+    <button class="border-none bg-transparent text-3xl cursor-pointer text-brown p-1 hover:opacity-70 transition-opacity" id="closeCart" aria-label="Close cart">×</button>
+  </div>
+
+  <div id="cartItems" class="flex-1 overflow-y-auto py-4 divide-y divide-gray-100">
+    <p class="text-center text-[#999] mt-20">Your cart is empty.<br>Go pick a doughnut!</p>
+  </div>
+
+  <div class="border-t border-[#eee] pt-4 mt-auto">
+    <div class="flex justify-between items-center mb-4">
+      <span class="text-sm font-semibold">Subtotal</span>
+      <strong id="cartTotal" class="text-lg text-brown">₱0</strong>
+    </div>
+    <button class="w-full border-none bg-orange text-white py-3.5 px-4 rounded-lg font-extrabold cursor-pointer hover:bg-[#d93e0e] active:scale-[0.99] transition-all" id="checkoutButton">CHECKOUT</button>
+  </div>
+</aside>
+
+<!-- CHECKOUT MODAL -->
+<div class="fixed inset-0 bg-black/50 z-[60] opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-4 sm:p-6" id="checkoutModal">
+  <div class="w-full max-w-[500px] max-h-[90vh] overflow-y-auto bg-white rounded-2xl p-6 sm:p-8 relative shadow-2xl">
+    <button class="absolute top-4 right-5 border-none bg-transparent text-3xl cursor-pointer text-brown hover:opacity-70" id="closeCheckout" aria-label="Close checkout">×</button>
+    <p class="text-[10px] sm:text-xs tracking-[2px] font-bold mb-1 text-brown uppercase">CHECKOUT</p>
+    <h2 class="text-brown text-2xl sm:text-4xl font-normal mb-5">Almost <em class="font-display-em">there.</em></h2>
+
+    <form id="checkoutForm" class="grid gap-3.5">
+      <label class="grid gap-1.5 text-xs font-bold text-brown">Name
+        <input type="text" id="customerName" required placeholder="Your name" class="w-full p-2.5 sm:p-3 border border-[#d8cec8] rounded-lg font-sans text-sm outline-none focus:border-orange focus:ring-1 focus:ring-orange transition-all">
+      </label>
+
+      <label class="grid gap-1.5 text-xs font-bold text-brown">Contact Number
+        <input type="tel" id="customerContact" required placeholder="09XXXXXXXXX" class="w-full p-2.5 sm:p-3 border border-[#d8cec8] rounded-lg font-sans text-sm outline-none focus:border-orange focus:ring-1 focus:ring-orange transition-all">
+      </label>
+
+      <label class="grid gap-1.5 text-xs font-bold text-brown">Order Type
+        <select id="orderType" class="w-full p-2.5 sm:p-3 border border-[#d8cec8] rounded-lg font-sans text-sm outline-none focus:border-orange focus:ring-1 focus:ring-orange transition-all bg-white">
+          <option>Pickup</option>
+          <option>Delivery</option>
+        </select>
+      </label>
+
+      <label class="grid gap-1.5 text-xs font-bold text-brown">Address
+        <textarea id="customerAddress" placeholder="Enter your address (required for delivery)" class="w-full p-2.5 sm:p-3 border border-[#d8cec8] rounded-lg font-sans text-sm outline-none focus:border-orange focus:ring-1 focus:ring-orange transition-all min-h-[75px] resize-y"></textarea>
+      </label>
+
+      <label class="grid gap-1.5 text-xs font-bold text-brown">Payment Method
+        <select id="paymentMethod" class="w-full p-2.5 sm:p-3 border border-[#d8cec8] rounded-lg font-sans text-sm outline-none focus:border-orange focus:ring-1 focus:ring-orange transition-all bg-white">
+          <option>Maya (FULL PAYMENT)</option>
+          <option>GCash (FULL PAYMENT)</option>
+        </select>
+      </label>
+
+      <div class="flex justify-between items-center my-2 bg-cream p-3.5 rounded-lg">
+        <span class="text-sm font-semibold">Total</span>
+        <strong id="checkoutTotal" class="text-lg text-brown">₱0</strong>
+      </div>
+
+      <button class="w-full border-none bg-orange text-white py-3.5 px-4 rounded-lg font-extrabold cursor-pointer hover:bg-[#d93e0e] active:scale-[0.99] transition-all" type="submit">PLACE ORDER</button>
+    </form>
+  </div>
+</div>
+
+<!-- SUCCESS MODAL -->
+<div class="fixed inset-0 bg-black/50 z-[60] opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-4 sm:p-6" id="successModal">
+  <div class="w-full max-w-[450px] max-h-[90vh] overflow-y-auto bg-white rounded-2xl p-6 sm:p-8 relative text-center shadow-2xl">
+    <div class="w-14 h-14 sm:w-[65px] sm:h-[65px] grid place-items-center mx-auto mb-4 bg-[#e7f5e8] text-[#3e9650] rounded-full text-2xl sm:text-[32px]">✓</div>
+    <p class="text-[10px] sm:text-xs tracking-[2px] font-bold mb-1 text-brown uppercase">ORDER CONFIRMED</p>
+    <h2 class="text-brown text-2xl sm:text-3xl font-normal mb-3">Thank you, <span id="successName">customer</span>!</h2>
+    <p class="text-xs sm:text-sm text-gray-600">Your order has been received. We'll contact you using the number you provided.</p>
+    <button class="w-full border-none bg-orange text-white py-3.5 px-4 rounded-lg font-extrabold cursor-pointer hover:bg-[#d93e0e] active:scale-[0.99] transition-all mt-6" id="finishOrder">DONE</button>
+  </div>
+</div>

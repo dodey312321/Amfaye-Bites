@@ -35,8 +35,6 @@
     html { scroll-behavior: smooth; }
     body { font-family: 'Montserrat', Arial, sans-serif; }
     .font-display-em { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 500; }
-    
-    /* Ensure sections don't hide behind fixed headers on anchor navigation */
     section[id] { scroll-margin-top: 80px; }
   </style>
 </head>
@@ -58,14 +56,13 @@
       <a class="text-xs xl:text-sm font-bold transition-opacity duration-200 hover:opacity-65" href="#branches">OUR BRANCHES</a>
     </nav>
 
-    <!-- Header Actions (Cart & Mobile Menu Button) -->
+    <!-- Header Actions -->
     <div class="flex items-center gap-2 sm:gap-3 ml-auto lg:ml-0">
       <button class="border border-white/70 bg-transparent text-white py-1.5 px-3 sm:py-[9px] sm:px-[14px] rounded-full cursor-pointer font-bold text-xs sm:text-sm flex items-center gap-1 hover:bg-white/10 active:scale-95 transition-all" id="openCart" aria-label="Open cart">
         <span>CART</span>
         <span id="cartCount" class="bg-orange rounded-full px-2 py-0.5 text-xs">0</span>
       </button>
 
-      <!-- Mobile Menu Toggle Button -->
       <button id="mobileMenuBtn" aria-label="Toggle navigation menu" class="lg:hidden text-white p-2 text-2xl focus:outline-none">
         <span id="menuIcon">☰</span>
       </button>
@@ -81,103 +78,13 @@
     </div>
   </header>
 
-  <!-- HERO -->
-  <main id="home" class="pt-16">
-    <section class="min-h-[85vh] sm:min-h-[650px] lg:min-h-[700px] relative flex items-center overflow-hidden
-      bg-[radial-gradient(circle_at_75%_20%,rgba(255,220,170,.5),transparent_28%),radial-gradient(circle_at_80%_80%,rgba(246,164,89,.55),transparent_30%),linear-gradient(110deg,#3e2a22_0%,#8a4b2b_38%,#e0a668_70%,#f6c98d_100%)]
-      before:content-['🍩'] before:absolute before:text-[140px] lg:before:text-[230px] before:opacity-80 before:[filter:saturate(.7)] before:left-[5%] lg:before:left-[12%] before:top-[18%] before:-rotate-[14deg] before:hidden sm:before:block
-      after:content-['🍩'] after:absolute after:text-[140px] lg:after:text-[230px] after:opacity-80 after:[filter:saturate(.7)] after:right-[5%] lg:after:right-[8%] after:bottom-[-5%] lg:after:bottom-[-15%] after:rotate-[12deg] after:hidden sm:after:block">
-      <div class="absolute inset-0 bg-gradient-to-r from-[#3e2a22]/90 lg:from-[#885535ed] to-[#3e2a22]/40 lg:to-[rgba(13,5,5,0.08)]"></div>
-      <div class="relative z-[2] text-white px-6 sm:px-12 lg:ml-[10%] my-12 lg:my-0 max-w-[580px]">
-        <p class="text-[10px] sm:text-xs tracking-[2px] sm:tracking-[3px] font-bold mb-3 uppercase">BITE SIZED - LOVE SIZED</p>
-        <h1 class="text-4xl sm:text-6xl lg:text-[75px] xl:text-[90px] leading-[0.95] sm:leading-[0.85] font-normal tracking-[-2px] sm:tracking-[-4px]">Say it with<br><em class="font-display-em">Amfaye Bites</em></h1>
-        <p class="mt-4 sm:mt-6 text-sm sm:text-base lg:text-[17px] opacity-90">A little sweetness for every moment.</p>
-        <a href="#donuts" class="inline-flex items-center justify-center gap-1 sm:gap-2 w-[90px] h-[90px] sm:w-[118px] sm:h-[118px] rounded-full bg-orange text-white mt-6 sm:mt-[30px] text-xs sm:text-sm font-extrabold text-center leading-[1.1] transition-all duration-200 hover:scale-[1.06] hover:bg-[#d93e0e] active:scale-95 shadow-lg">ORDER<br>NOW <span class="text-2xl sm:text-[34px] leading-none">›</span></a>
-      </div>
-    </section>
-
-    <!-- ORDER STRIP -->
-    <section class="bg-white py-4 px-6 flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-6 text-center shadow-sm">
-      <p class="text-sm sm:text-base text-brown font-medium">For your sweet moments at home, we're ready for <strong>delivery</strong></p>
-      <a href="#donuts" class="bg-orange text-white rounded-full py-2.5 px-5 sm:py-3.5 sm:px-6 text-xs sm:text-sm font-bold hover:bg-[#d93e0e] transition-colors inline-flex items-center gap-1">ORDER NOW <span class="text-lg sm:text-2xl leading-none">›</span></a>
-    </section>
-
-    <!-- STORY -->
-    <section class="grid grid-cols-1 lg:grid-cols-2 items-center gap-8 lg:gap-[90px] bg-white px-6 sm:px-[7%] py-12 sm:py-[75px] lg:px-[9%] lg:py-[110px]" id="story">
-      <div class="min-h-[260px] sm:min-h-[380px] lg:min-h-[470px] rounded-tl-[150px] sm:rounded-tl-[250px] rounded-tr-[150px] sm:rounded-tr-[250px] rounded-bl-[20px] rounded-br-[20px] grid place-items-center overflow-hidden
-        bg-[radial-gradient(circle_at_50%_45%,#f6b36c_0_14%,transparent_15%),radial-gradient(circle_at_50%_50%,#8d4e30_0_31%,#d59a63_32%_49%,#f1d2a9_50%_63%,transparent_64%),#b7d4e9]">
-        <div class="text-[80px] sm:text-[110px] lg:text-[130px] [filter:drop-shadow(0_20px_15px_rgba(0,0,0,.2))] -rotate-[12deg]"> N/A</div>
-      </div>
-      <div class="max-w-[560px] mx-auto lg:mx-0">
-        <p class="text-xs tracking-[3px] font-bold mb-2 sm:mb-3 text-brown uppercase">OUR STORY</p>
-        <h2 class="text-brown text-3xl sm:text-5xl lg:text-[clamp(44px,5vw,70px)] leading-[1.1] sm:leading-[1.05] font-normal mb-4 sm:mb-[25px]">There's always a<br><em class="font-display-em">sweeter way</em> to say it.</h2>
-        <p class="text-[#655b57] text-sm sm:text-base mb-3 sm:mb-[15px] max-w-[500px]">Known for creative flavors and quality ingredients, Amfaye Bites makes every box feel a little more special.</p>
-        <p class="text-[#655b57] text-sm sm:text-base mb-4 sm:mb-[15px] max-w-[500px]">Whether you're celebrating something big or simply treating yourself, there's a doughnut waiting for you.</p>
-        <a href="#donuts" class="inline-block text-orange text-xs sm:text-[13px] font-extrabold tracking-[1px] hover:underline">DISCOVER OUR DONUTS →</a>
-      </div>
-    </section>
-
-    <!-- MENU -->
-    <section class="bg-cream px-4 sm:px-[7%] py-12 sm:py-[75px] lg:px-[9%] lg:py-[110px]" id="donuts">
-      <div class="text-center mb-8 sm:mb-[45px]">
-        <p class="text-xs tracking-[3px] font-bold mb-2 sm:mb-3 text-brown uppercase">OUR DONUTS</p>
-        <h2 class="text-brown text-3xl sm:text-5xl lg:text-[clamp(44px,5vw,70px)] leading-[1.1] sm:leading-[1.05] font-normal mb-3 sm:mb-[25px]">Pick your <em class="font-display-em">favorite.</em></h2>
-        <p class="text-muted text-sm sm:text-base">Freshly made treats for every craving.</p>
-      </div>
-
-      <!-- Scrollable Category Tabs on Mobile -->
-      <div class="flex justify-start sm:justify-center gap-2 sm:gap-[10px] mb-6 sm:mb-[35px] overflow-x-auto pb-2 scrollbar-none category-tabs -mx-4 px-4 sm:mx-0 sm:px-0">
-        <button class="active whitespace-nowrap border border-[#cfc4bd] bg-brown text-white rounded-[30px] py-2 px-4 sm:py-[10px] sm:px-5 cursor-pointer font-bold text-xs transition-colors shrink-0" data-category="all">ALL</button>
-        <button class="whitespace-nowrap border border-[#cfc4bd] bg-transparent text-brown rounded-[30px] py-2 px-4 sm:py-[10px] sm:px-5 cursor-pointer font-bold text-xs hover:bg-brown hover:text-white transition-colors shrink-0" data-category="premium">PREMIUM DONUTS</button>
-        <button class="whitespace-nowrap border border-[#cfc4bd] bg-transparent text-brown rounded-[30px] py-2 px-4 sm:py-[10px] sm:px-5 cursor-pointer font-bold text-xs hover:bg-brown hover:text-white transition-colors shrink-0" data-category="messy">MESSY DONUTS</button>
-        <button class="whitespace-nowrap border border-[#cfc4bd] bg-transparent text-brown rounded-[30px] py-2 px-4 sm:py-[10px] sm:px-5 cursor-pointer font-bold text-xs hover:bg-brown hover:text-white transition-colors shrink-0" data-category="dip">DIP-A-DOUGH DONUTS</button>
-        <button class="whitespace-nowrap border border-[#cfc4bd] bg-transparent text-brown rounded-[30px] py-2 px-4 sm:py-[10px] sm:px-5 cursor-pointer font-bold text-xs hover:bg-brown hover:text-white transition-colors shrink-0" data-category="cheesy">CHEESY DONUTS</button>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-[22px]" id="productGrid"></div>
-    </section>
-
-    <!-- REVIEWS -->
-    <section class="bg-brown text-white px-6 sm:px-[7%] py-12 sm:py-[75px] lg:px-[9%] lg:py-[110px]" id="reviews">
-      <div class="text-center mb-8 sm:mb-[45px]">
-        <p class="text-xs tracking-[3px] font-bold mb-2 sm:mb-3 text-white uppercase">OUR REVIEWS</p>
-        <h2 class="text-white text-3xl sm:text-5xl lg:text-[clamp(44px,5vw,70px)] leading-[1.1] sm:leading-[1.05] font-normal mb-3 sm:mb-[25px]">Sweet words from<br><em class="font-display-em">our customers.</em></h2>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-[25px]">
-        <article class="bg-white/[.09] border border-white/15 p-6 sm:p-[30px] rounded-xl">
-          <div class="text-[#ffd18b] tracking-[4px] mb-3 sm:mb-[15px]">★</div>
-          <p class="mb-4 sm:mb-5 text-[#eee7e3] text-sm sm:text-base">"Tangina di masarap"</p>
-          <strong class="text-sm sm:text-base">— Edrian</strong>
-        </article>
-        <article class="bg-white/[.09] border border-white/15 p-6 sm:p-[30px] rounded-xl">
-          <div class="text-[#ffd18b] tracking-[4px] mb-3 sm:mb-[15px]">★★★★★</div>
-          <p class="mb-4 sm:mb-5 text-[#eee7e3] text-sm sm:text-base">"Ordered a box for my family and everyone loved it. Will not order again!"</p>
-          <strong class="text-sm sm:text-base">— Kyle</strong>
-        </article>
-        <article class="bg-white/[.09] border border-white/15 p-6 sm:p-[30px] rounded-xl">
-          <div class="text-[#ffd18b] tracking-[4px] mb-3 sm:mb-[15px]">★★★★★</div>
-          <p class="mb-4 sm:mb-5 text-[#eee7e3] text-sm sm:text-base">"Perfect for gifts and celebrations. The flavors are really salty."</p>
-          <strong class="text-sm sm:text-base">— Elbert</strong>
-        </article>
-      </div>
-    </section>
-
-    <!-- BRANCHES -->
-    <section class="bg-white px-6 sm:px-[7%] py-12 sm:py-[75px] lg:px-[9%] lg:py-[110px]" id="branches">
-      <div class="text-center mb-8 sm:mb-[45px]">
-        <p class="text-xs tracking-[3px] font-bold mb-2 sm:mb-3 text-brown uppercase">OUR BRANCHES</p>
-        <h2 class="text-brown text-3xl sm:text-5xl lg:text-[clamp(44px,5vw,70px)] leading-[1.1] sm:leading-[1.05] font-normal mb-3 sm:mb-[25px]">Come say <em class="font-display-em">hello.</em></h2>
-      </div>
-
-      <div class="flex justify-center max-w-4xl mx-auto p-4">
-  <article class="w-full max-w-sm border border-[#ded5cf] p-6 sm:p-8 bg-white rounded-lg text-center shadow-sm">
-    <h3 class="text-orange font-bold text-lg mb-2">Branch 01</h3>
-    <p class="text-brown mb-4 text-sm sm:text-base">N/A<br>Bulacan City</p>
-    <span class="text-[#91837c] text-[11px] tracking-[1px] font-bold">MON–SUN • 8AM–8PM</span>
-  </article>
-      </div>
-    </section>
+  <!-- MAIN SECTIONS -->
+  <main>
+    <div id="section-home"></div>
+    <div id="section-story"></div>
+    <div id="section-products"></div>
+    <div id="section-reviews"></div>
+    <div id="section-branches"></div>
   </main>
 
   <!-- FOOTER -->
@@ -191,85 +98,34 @@
     <p class="text-[11px] text-[#aaa09b] mt-6 sm:mt-[30px]">© 2026 Amfaye's Bites. All rights reserved.</p>
   </footer>
 
-  <!-- CART DRAWER -->
-  <div class="fixed inset-0 bg-black/50 z-40 opacity-0 pointer-events-none transition-opacity duration-300" id="cartBackdrop"></div>
-  <aside class="fixed z-50 top-0 right-[-100%] sm:right-[-430px] h-screen w-full sm:w-[430px] bg-white p-5 sm:p-[30px] transition-[right] duration-300 ease-in-out flex flex-col shadow-2xl" id="cartDrawer">
-    <div class="flex justify-between items-center border-b border-[#eee] pb-4">
-      <div>
-        <p class="text-[10px] sm:text-xs tracking-[2px] font-bold text-brown uppercase">YOUR ORDER</p>
-        <h2 class="text-brown text-xl sm:text-2xl font-bold">Your Cart</h2>
-      </div>
-      <button class="border-none bg-transparent text-3xl cursor-pointer text-brown p-1 hover:opacity-70 transition-opacity" id="closeCart" aria-label="Close cart">×</button>
-    </div>
+  <!-- CART & MODALS CONTAINER -->
+  <div id="cart-container"></div>
 
-    <div id="cartItems" class="flex-1 overflow-y-auto py-4 divide-y divide-gray-100">
-      <p class="text-center text-[#999] mt-20">Your cart is empty.<br>Go pick a doughnut!</p>
-    </div>
+  <!-- Script to load components -->
+  <script>
+    async function loadComponent(elementId, filePath) {
+      const res = await fetch(filePath);
+      const html = await res.text();
+      document.getElementById(elementId).innerHTML = html;
+    }
 
-    <div class="border-t border-[#eee] pt-4 mt-auto">
-      <div class="flex justify-between items-center mb-4">
-        <span class="text-sm font-semibold">Subtotal</span>
-        <strong id="cartTotal" class="text-lg text-brown">₱0</strong>
-      </div>
-      <button class="w-full border-none bg-orange text-white py-3.5 px-4 rounded-lg font-extrabold cursor-pointer hover:bg-[#d93e0e] active:scale-[0.99] transition-all" id="checkoutButton">CHECKOUT</button>
-    </div>
-  </aside>
+    async function init() {
+      await Promise.all([
+        loadComponent('section-home', 'home.html'),
+        loadComponent('section-story', 'story.html'),
+        loadComponent('section-products', 'products.html'),
+        loadComponent('section-reviews', 'reviews.html'),
+        loadComponent('section-branches', 'branches.html'),
+        loadComponent('cart-container', 'cart.html')
+      ]);
 
-  <!-- CHECKOUT MODAL -->
-  <div class="fixed inset-0 bg-black/50 z-[60] opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-4 sm:p-6" id="checkoutModal">
-    <div class="w-full max-w-[500px] max-h-[90vh] overflow-y-auto bg-white rounded-2xl p-6 sm:p-8 relative shadow-2xl">
-      <button class="absolute top-4 right-5 border-none bg-transparent text-3xl cursor-pointer text-brown hover:opacity-70" id="closeCheckout" aria-label="Close checkout">×</button>
-      <p class="text-[10px] sm:text-xs tracking-[2px] font-bold mb-1 text-brown uppercase">CHECKOUT</p>
-      <h2 class="text-brown text-2xl sm:text-4xl font-normal mb-5">Almost <em class="font-display-em">there.</em></h2>
+      // Load script.js pagkatapos ma-render ang lahat ng HTML files
+      const script = document.createElement('script');
+      script.src = 'script.js';
+      document.body.appendChild(script);
+    }
 
-      <form id="checkoutForm" class="grid gap-3.5">
-        <label class="grid gap-1.5 text-xs font-bold text-brown">Name
-          <input type="text" id="customerName" required placeholder="Your name" class="w-full p-2.5 sm:p-3 border border-[#d8cec8] rounded-lg font-sans text-sm outline-none focus:border-orange focus:ring-1 focus:ring-orange transition-all">
-        </label>
-
-        <label class="grid gap-1.5 text-xs font-bold text-brown">Contact Number
-          <input type="tel" id="customerContact" required placeholder="09XXXXXXXXX" class="w-full p-2.5 sm:p-3 border border-[#d8cec8] rounded-lg font-sans text-sm outline-none focus:border-orange focus:ring-1 focus:ring-orange transition-all">
-        </label>
-
-        <label class="grid gap-1.5 text-xs font-bold text-brown">Order Type
-          <select id="orderType" class="w-full p-2.5 sm:p-3 border border-[#d8cec8] rounded-lg font-sans text-sm outline-none focus:border-orange focus:ring-1 focus:ring-orange transition-all bg-white">
-            <option>Pickup</option>
-            <option>Delivery</option>
-          </select>
-        </label>
-
-        <label class="grid gap-1.5 text-xs font-bold text-brown">Address
-          <textarea id="customerAddress" placeholder="Enter your address (required for delivery)" class="w-full p-2.5 sm:p-3 border border-[#d8cec8] rounded-lg font-sans text-sm outline-none focus:border-orange focus:ring-1 focus:ring-orange transition-all min-h-[75px] resize-y"></textarea>
-        </label>
-
-        <label class="grid gap-1.5 text-xs font-bold text-brown">Payment Method
-          <select id="paymentMethod" class="w-full p-2.5 sm:p-3 border border-[#d8cec8] rounded-lg font-sans text-sm outline-none focus:border-orange focus:ring-1 focus:ring-orange transition-all bg-white">
-            <option>Maya (FULL PAYMENT)</option>
-            <option>GCash (FULL PAYMENT)</option>
-          </select>
-        </label>
-
-        <div class="flex justify-between items-center my-2 bg-cream p-3.5 rounded-lg">
-          <span class="text-sm font-semibold">Total</span>
-          <strong id="checkoutTotal" class="text-lg text-brown">₱0</strong>
-        </div>
-
-        <button class="w-full border-none bg-orange text-white py-3.5 px-4 rounded-lg font-extrabold cursor-pointer hover:bg-[#d93e0e] active:scale-[0.99] transition-all" type="submit">PLACE ORDER</button>
-      </form>
-    </div>
-  </div>
-
-  <!-- SUCCESS MODAL -->
-  <div class="fixed inset-0 bg-black/50 z-[60] opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-4 sm:p-6" id="successModal">
-    <div class="w-full max-w-[450px] max-h-[90vh] overflow-y-auto bg-white rounded-2xl p-6 sm:p-8 relative text-center shadow-2xl">
-      <div class="w-14 h-14 sm:w-[65px] sm:h-[65px] grid place-items-center mx-auto mb-4 bg-[#e7f5e8] text-[#3e9650] rounded-full text-2xl sm:text-[32px]">✓</div>
-      <p class="text-[10px] sm:text-xs tracking-[2px] font-bold mb-1 text-brown uppercase">ORDER CONFIRMED</p>
-      <h2 class="text-brown text-2xl sm:text-3xl font-normal mb-3">Thank you, <span id="successName">customer</span>!</h2>
-      <p class="text-xs sm:text-sm text-gray-600">Your order has been received. We'll contact you using the number you provided.</p>
-      <button class="w-full border-none bg-orange text-white py-3.5 px-4 rounded-lg font-extrabold cursor-pointer hover:bg-[#d93e0e] active:scale-[0.99] transition-all mt-6" id="finishOrder">DONE</button>
-    </div>
-  </div>
-
-  <script src="script.js"></script>
+    init();
+  </script>
 </body>
 </html>

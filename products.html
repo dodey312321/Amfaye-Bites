@@ -1,0 +1,18 @@
+<section class="bg-cream px-4 sm:px-[7%] py-12 sm:py-[75px] lg:px-[9%] lg:py-[110px]" id="donuts">
+  <div class="text-center mb-8 sm:mb-[45px]">
+    <p class="text-xs tracking-[3px] font-bold mb-2 sm:mb-3 text-brown uppercase">OUR DONUTS</p>
+    <h2 class="text-brown text-3xl sm:text-5xl lg:text-[clamp(44px,5vw,70px)] leading-[1.1] sm:leading-[1.05] font-normal mb-3 sm:mb-[25px]">Pick your <em class="font-display-em">favorite.</em></h2>
+    <p class="text-muted text-sm sm:text-base">Freshly made treats for every craving.</p>
+  </div>
+
+  <!-- Scrollable Category Tabs on Mobile -->
+  <div class="flex justify-start sm:justify-center gap-2 sm:gap-[10px] mb-6 sm:mb-[35px] overflow-x-auto pb-2 scrollbar-none category-tabs -mx-4 px-4 sm:mx-0 sm:px-0">
+    <button class="active whitespace-nowrap border border-[#cfc4bd] bg-brown text-white rounded-[30px] py-2 px-4 sm:py-[10px] sm:px-5 cursor-pointer font-bold text-xs transition-colors shrink-0" data-category="all">ALL</button>
+    <button class="whitespace-nowrap border border-[#cfc4bd] bg-transparent text-brown rounded-[30px] py-2 px-4 sm:py-[10px] sm:px-5 cursor-pointer font-bold text-xs hover:bg-brown hover:text-white transition-colors shrink-0" data-category="premium">PREMIUM DONUTS</button>
+    <button class="whitespace-nowrap border border-[#cfc4bd] bg-transparent text-brown rounded-[30px] py-2 px-4 sm:py-[10px] sm:px-5 cursor-pointer font-bold text-xs hover:bg-brown hover:text-white transition-colors shrink-0" data-category="messy">MESSY DONUTS</button>
+    <button class="whitespace-nowrap border border-[#cfc4bd] bg-transparent text-brown rounded-[30px] py-2 px-4 sm:py-[10px] sm:px-5 cursor-pointer font-bold text-xs hover:bg-brown hover:text-white transition-colors shrink-0" data-category="dip">DIP-A-DOUGH DONUTS</button>
+    <button class="whitespace-nowrap border border-[#cfc4bd] bg-transparent text-brown rounded-[30px] py-2 px-4 sm:py-[10px] sm:px-5 cursor-pointer font-bold text-xs hover:bg-brown hover:text-white transition-colors shrink-0" data-category="cheesy">CHEESY DONUTS</button>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-[22px]" id="productGrid"></div>
+</section>
