@@ -56,23 +56,28 @@
       <a class="text-xs xl:text-sm font-bold transition-opacity duration-200 hover:opacity-65" href="#branches">OUR BRANCHES</a>
     </nav>
 
-    <!-- Header Actions -->
-    <div class="flex items-center gap-2 sm:gap-3 ml-auto lg:ml-0">
-      <button class="border border-white/70 bg-transparent text-white py-1.5 px-3 sm:py-[9px] sm:px-[14px] rounded-full cursor-pointer font-bold text-xs sm:text-sm flex items-center gap-1 hover:bg-white/10 active:scale-95 transition-all" id="openCart" aria-label="Open cart">
-        <span>CART</span>
-        <span id="cartCount" class="bg-orange rounded-full px-2 py-0.5 text-xs">0</span>
-      </button>
+   <!-- Header Actions -->
+<div class="flex items-center gap-2 sm:gap-3 ml-auto lg:ml-0">
+  <!-- NEW: LOGIN / SIGN UP BUTTON -->
+  <button class="border border-white/70 bg-transparent text-white py-1.5 px-3 sm:py-[9px] sm:px-[14px] rounded-full cursor-pointer font-bold text-xs sm:text-sm flex items-center gap-1 hover:bg-white/10 active:scale-95 transition-all" id="openAuth" aria-label="Open auth modal">
+    <span>LOGIN</span>
+  </button>
 
-      <button id="mobileMenuBtn" aria-label="Toggle navigation menu" class="lg:hidden text-white p-2 text-2xl focus:outline-none">
-        <span id="menuIcon">☰</span>
-      </button>
-    </div>
+  <button class="border border-white/70 bg-transparent text-white py-1.5 px-3 sm:py-[9px] sm:px-[14px] rounded-full cursor-pointer font-bold text-xs sm:text-sm flex items-center gap-1 hover:bg-white/10 active:scale-95 transition-all" id="openCart" aria-label="Open cart">
+    <span>CART</span>
+    <span id="cartCount" class="bg-orange rounded-full px-2 py-0.5 text-xs">0</span>
+  </button>
+
+  <button id="mobileMenuBtn" aria-label="Toggle navigation menu" class="lg:hidden text-white p-2 text-2xl focus:outline-none">
+    <span id="menuIcon">☰</span>
+  </button>
+</div>
 
     <!-- Mobile Navigation Drawer -->
     <div id="mobileMenu" class="absolute top-full left-0 w-full bg-[#1c1817]/95 backdrop-blur-lg flex-col p-6 gap-4 border-b border-white/10 hidden lg:hidden transition-all duration-300">
       <a class="mobile-nav-link text-sm font-bold py-2 border-b border-white/10" href="#home">HOME</a>
       <a class="mobile-nav-link text-sm font-bold py-2 border-b border-white/10" href="#story">OUR STORY</a>
-      <a class="mobile-nav-link text-sm font-bold py-2 border-b border-white/10" href="#donuts">OUR DONUTS</a>
+      <a class="mobile-nav-link text-sm font-bold py-2 border-b border-white/10" href="#donuts">PRODCUTS</a>
       <a class="mobile-nav-link text-sm font-bold py-2 border-b border-white/10" href="#reviews">REVIEWS</a>
       <a class="mobile-nav-link text-sm font-bold py-2" href="#branches">OUR BRANCHES</a>
     </div>

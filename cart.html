@@ -76,3 +76,55 @@
     <button class="w-full border-none bg-orange text-white py-3.5 px-4 rounded-lg font-extrabold cursor-pointer hover:bg-[#d93e0e] active:scale-[0.99] transition-all mt-6" id="finishOrder">DONE</button>
   </div>
 </div>
+
+<!-- AUTH MODAL (LOGIN / SIGN UP) -->
+<div class="fixed inset-0 bg-black/50 z-[60] opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-4 sm:p-6" id="authModal">
+  <div class="w-full max-w-[450px] max-h-[90vh] overflow-y-auto bg-white rounded-2xl p-6 sm:p-8 relative shadow-2xl">
+    <button class="absolute top-4 right-5 border-none bg-transparent text-3xl cursor-pointer text-brown hover:opacity-70" id="closeAuth" aria-label="Close modal">×</button>
+
+    <!-- Tab Switching Buttons -->
+    <div class="flex border-b border-[#eee] mb-6">
+      <button id="tabLoginBtn" class="flex-1 py-2 font-bold text-sm text-orange border-b-2 border-orange transition-all cursor-pointer">LOGIN</button>
+      <button id="tabSignupBtn" class="flex-1 py-2 font-bold text-sm text-[#999] border-b-2 border-transparent hover:text-brown transition-all cursor-pointer">SIGN UP</button>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <form id="loginForm" class="grid gap-3.5">
+      <p class="text-[10px] sm:text-xs tracking-[2px] font-bold text-brown uppercase">WELCOME BACK</p>
+      <h2 class="text-brown text-2xl font-bold mb-1">Track your <em class="font-display-em">Orders.</em></h2>
+      <p class="text-xs text-gray-500 mb-2">Log in with your registered mobile number to receive SMS notifications and track your doughnut deliveries live.</p>
+
+      <label class="grid gap-1.5 text-xs font-bold text-brown">Mobile Number
+        <input type="tel" id="loginPhone" required placeholder="09XXXXXXXXX" class="w-full p-2.5 sm:p-3 border border-[#d8cec8] rounded-lg font-sans text-sm outline-none focus:border-orange focus:ring-1 focus:ring-orange transition-all">
+      </label>
+
+      <label class="grid gap-1.5 text-xs font-bold text-brown">Password
+        <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full p-2.5 sm:p-3 border border-[#d8cec8] rounded-lg font-sans text-sm outline-none focus:border-orange focus:ring-1 focus:ring-orange transition-all">
+      </label>
+
+      <button class="w-full border-none bg-orange text-white py-3.5 px-4 rounded-lg font-extrabold cursor-pointer hover:bg-[#d93e0e] active:scale-[0.99] transition-all mt-2" type="submit">LOG IN</button>
+    </form>
+
+    <!-- SIGN UP FORM -->
+    <form id="signupForm" class="grid gap-3.5 hidden">
+      <p class="text-[10px] sm:text-xs tracking-[2px] font-bold text-brown uppercase">CREATE ACCOUNT</p>
+      <h2 class="text-brown text-2xl font-bold mb-1">Stay <em class="font-display-em">Updated.</em></h2>
+      <p class="text-xs text-gray-500 mb-2">Sign up with your phone number to get real-time SMS status tracking for all your future orders!</p>
+
+      <label class="grid gap-1.5 text-xs font-bold text-brown">Full Name
+        <input type="text" id="signupName" required placeholder="Your full name" class="w-full p-2.5 sm:p-3 border border-[#d8cec8] rounded-lg font-sans text-sm outline-none focus:border-orange focus:ring-1 focus:ring-orange transition-all">
+      </label>
+
+      <label class="grid gap-1.5 text-xs font-bold text-brown">Mobile Number (for SMS Tracking)
+        <input type="tel" id="signupPhone" required placeholder="09XXXXXXXXX" class="w-full p-2.5 sm:p-3 border border-[#d8cec8] rounded-lg font-sans text-sm outline-none focus:border-orange focus:ring-1 focus:ring-orange transition-all">
+      </label>
+
+      <label class="grid gap-1.5 text-xs font-bold text-brown">Password
+        <input type="password" id="signupPassword" required placeholder="••••••••" class="w-full p-2.5 sm:p-3 border border-[#d8cec8] rounded-lg font-sans text-sm outline-none focus:border-orange focus:ring-1 focus:ring-orange transition-all">
+      </label>
+
+      <button class="w-full border-none bg-orange text-white py-3.5 px-4 rounded-lg font-extrabold cursor-pointer hover:bg-[#d93e0e] active:scale-[0.99] transition-all mt-2" type="submit">CREATE ACCOUNT</button>
+    </form>
+
+  </div>
+</div>

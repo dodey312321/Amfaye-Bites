@@ -1,3 +1,7 @@
+// ==========================================
+// 1. DATA & PRODUCT LIST
+// ==========================================
+// 💾 DATABASE NOTE: Replace static array with an API fetch call (e.g., fetch('/api/products'))
 const products = [
   // PREMIUM DONUTS — ₱99 / 6 pcs
   { id: 1, name: "Premium Donuts - Strawberry", category: "premium", price: 99, icon: "", description: "6 pcs box topped with roasted almonds, mini marshmallows, chocolate stick & pretzel, chocolate bar, and sprinkles (chocolate/rainbow)." },
@@ -24,10 +28,60 @@ const products = [
   { id: 16, name: "Cheesy Donuts", category: "cheesy", price: 65, icon: "", description: "10 pcs donuts, cheesy and delicious!" }
 ];
 
-// Tailwind classes for the product image tile background.
+
+// ==========================================
+// 2. GLOBAL STATE & DOM ELEMENTS
+// ==========================================
+// Active User Session
+let currentUser = JSON.parse(localStorage.getItem("currentUser")) || null;
+
+// Cart State
+let cart = JSON.parse(localStorage.getItem("donutCart")) || [];
+
+// DOM References: Product & Cart
+const productGrid = document.getElementById("productGrid");
+const cartDrawer = document.getElementById("cartDrawer");
+const cartBackdrop = document.getElementById("cartBackdrop");
+const cartItems = document.getElementById("cartItems");
+const cartCount = document.getElementById("cartCount");
+const cartTotal = document.getElementById("cartTotal");
+
+// DOM References: Checkout & Modals
+const checkoutTotal = document.getElementById("checkoutTotal");
+const checkoutModal = document.getElementById("checkoutModal");
+const successModal = document.getElementById("successModal");
+const checkoutBtn = document.getElementById("checkoutButton");
+
+// DOM References: Mobile Menu
+const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+const mobileMenu = document.getElementById("mobileMenu");
+const menuIcon = document.getElementById("menuIcon");
+
+// DOM References: Authentication
+const authModal = document.getElementById("authModal");
+const openAuthBtn = document.getElementById("openAuth");
+const closeAuthBtn = document.getElementById("closeAuth");
+const tabLoginBtn = document.getElementById("tabLoginBtn");
+const tabSignupBtn = document.getElementById("tabSignupBtn");
+const loginForm = document.getElementById("loginForm");
+const signupForm = document.getElementById("signupForm");
+
+// Tailwind Helper Classes
+const DRAWER_CLOSED = ["right-[-100%]", "sm:right-[-430px]"];
+const DRAWER_OPEN = ["right-0", "sm:right-0"];
+const BACKDROP_HIDDEN = ["opacity-0", "pointer-events-none"];
+const BACKDROP_VISIBLE = ["opacity-100", "pointer-events-auto"];
 const IMAGE_BG_DEFAULT = "bg-gradient-to-br from-[#ead5c2] to-[#f8efe6]";
 const IMAGE_BG_2N = "bg-gradient-to-br from-[#e6d2dc] to-[#f9edf0]";
 const IMAGE_BG_3N = "bg-gradient-to-br from-[#dfc4a5] to-[#f7ead5]";
+
+
+// ==========================================
+// 3. UTILITY & HELPER FUNCTIONS
+// ==========================================
+function peso(amount) {
+  return "₱" + amount.toLocaleString("en-PH");
+}
 
 function imageBgClass(position) {
   if (position % 3 === 0) return IMAGE_BG_3N;
@@ -35,34 +89,190 @@ function imageBgClass(position) {
   return IMAGE_BG_DEFAULT;
 }
 
-let cart = JSON.parse(localStorage.getItem("donutCart")) || [];
-
-const productGrid = document.getElementById("productGrid");
-const cartDrawer = document.getElementById("cartDrawer");
-const cartBackdrop = document.getElementById("cartBackdrop");
-const cartItems = document.getElementById("cartItems");
-const cartCount = document.getElementById("cartCount");
-const cartTotal = document.getElementById("cartTotal");
-const checkoutTotal = document.getElementById("checkoutTotal");
-const checkoutModal = document.getElementById("checkoutModal");
-const successModal = document.getElementById("successModal");
-
-const mobileMenuBtn = document.getElementById("mobileMenuBtn");
-const mobileMenu = document.getElementById("mobileMenu");
-const menuIcon = document.getElementById("menuIcon");
-
-// Drawer control classes
-const DRAWER_CLOSED = ["right-[-100%]", "sm:right-[-430px]"];
-const DRAWER_OPEN = ["right-0", "sm:right-0"];
-const BACKDROP_HIDDEN = ["opacity-0", "pointer-events-none"];
-const BACKDROP_VISIBLE = ["opacity-100", "pointer-events-auto"];
-
-function peso(amount) {
-  return "₱" + amount.toLocaleString("en-PH");
+function showModal(modal) {
+  if (!modal) return;
+  modal.classList.remove(...BACKDROP_HIDDEN);
+  modal.classList.add(...BACKDROP_VISIBLE);
+  document.body.style.overflow = "hidden";
 }
 
+function hideModal(modal) {
+  if (!modal) return;
+  modal.classList.remove(...BACKDROP_VISIBLE);
+  modal.classList.add(...BACKDROP_HIDDEN);
+  document.body.style.overflow = "";
+}
+
+
+// ==========================================
+// 4. USER AUTHENTICATION & SESSION MANAGEMENT
+// ==========================================
+
+// Updates Header Button UI depending on login state
+function updateAuthUI() {
+  if (!openAuthBtn) return;
+  if (currentUser) {
+    openAuthBtn.innerHTML = `<span>HI, ${currentUser.name.split(" ")[0].toUpperCase()}</span>`;
+  } else {
+    openAuthBtn.innerHTML = `<span>LOGIN</span>`;
+  }
+}
+
+// Open Auth Modal or Handle Logout
+if (openAuthBtn) {
+  openAuthBtn.addEventListener("click", async () => {
+    if (currentUser) {
+      if (confirm(`You are logged in as ${currentUser.name}.\nDo you want to log out?`)) {
+        
+        // 💾 DATABASE NOTE: You can trigger a server-side logout route here:
+        // await fetch('/api/logout', { method: 'POST' });
+
+        currentUser = null;
+        localStorage.removeItem("currentUser");
+        updateAuthUI();
+
+        // Reset checkout fields to guest state
+        const nameInput = document.getElementById("customerName");
+        const contactInput = document.getElementById("customerContact");
+        if (nameInput) {
+          nameInput.value = "";
+          nameInput.readOnly = false;
+          nameInput.classList.remove("bg-gray-100", "cursor-not-allowed");
+        }
+        if (contactInput) {
+          contactInput.value = "";
+          contactInput.readOnly = false;
+          contactInput.classList.remove("bg-gray-100", "cursor-not-allowed");
+        }
+      }
+    } else {
+      showModal(authModal);
+    }
+  });
+}
+
+if (closeAuthBtn) closeAuthBtn.addEventListener("click", () => hideModal(authModal));
+if (authModal) {
+  authModal.addEventListener("click", (e) => {
+    if (e.target === authModal) hideModal(authModal);
+  });
+}
+
+// Auth Tab Switcher (Login vs Signup)
+if (tabLoginBtn && tabSignupBtn) {
+  tabLoginBtn.addEventListener("click", () => {
+    loginForm.classList.remove("hidden");
+    signupForm.classList.add("hidden");
+    tabLoginBtn.classList.add("text-orange", "border-orange");
+    tabLoginBtn.classList.remove("text-[#999]", "border-transparent");
+    tabSignupBtn.classList.remove("text-orange", "border-orange");
+    tabSignupBtn.classList.add("text-[#999]", "border-transparent");
+  });
+
+  tabSignupBtn.addEventListener("click", () => {
+    signupForm.classList.remove("hidden");
+    loginForm.classList.add("hidden");
+    tabSignupBtn.classList.add("text-orange", "border-orange");
+    tabSignupBtn.classList.remove("text-[#999]", "border-transparent");
+    tabLoginBtn.classList.remove("text-orange", "border-orange");
+    tabLoginBtn.classList.add("text-[#999]", "border-transparent");
+  });
+}
+
+// Handle Login Form Submission
+if (loginForm) {
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const phone = document.getElementById("loginPhone").value.trim();
+    const password = document.getElementById("loginPassword")?.value || "";
+
+    try {
+      // -------------------------------------------------------------
+      // 💾 DATABASE INTEGRATION POINT: USER LOGIN
+      // -------------------------------------------------------------
+      // Replace localStorage logic below with your API call:
+      // const res = await fetch('/api/login', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({ phone, password })
+      // });
+      // const data = await res.json();
+      // currentUser = { id: data.user.id, name: data.user.name, phone: data.user.phone };
+      // -------------------------------------------------------------
+
+      // Temporary LocalStorage(Pre-database) NASA BABA NG COMMENT NA TO YUNG PAPALITAN PAG MAG ADD NA NG DATABASE:
+      const savedUsers = JSON.parse(localStorage.getItem("appUsers")) || [];
+      const foundUser = savedUsers.find(u => u.phone === phone);
+      
+      currentUser = foundUser ? foundUser : { name: "Customer", phone: phone };
+      localStorage.setItem("currentUser", JSON.stringify(currentUser));
+
+      updateAuthUI();
+      hideModal(authModal);
+      loginForm.reset();
+    } catch (error) {
+      console.error("Login Failed:", error);
+      alert("Error logging in. Please try again.");
+    }
+  });
+}
+
+// Handle Signup Form Submission
+if (signupForm) {
+  signupForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const name = document.getElementById("signupName").value.trim();
+    const phone = document.getElementById("signupPhone").value.trim();
+    const password = document.getElementById("signupPassword")?.value || "";
+
+    try {
+      // -------------------------------------------------------------
+      // 💾 DATABASE INTEGRATION POINT: USER REGISTRATION
+      // -------------------------------------------------------------
+      // Replace localStorage logic below with your API call:
+      // const res = await fetch('/api/register', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({ name, phone, password })
+      // });
+      // const data = await res.json();
+      // currentUser = { id: data.user.id, name: data.user.name, phone: data.user.phone };
+      // -------------------------------------------------------------
+
+      // Temporary LocalStorage (Pre-database) NASA BABA NG COMMENT NA TO YUNG PAPALITAN PAG MAG ADD NA NG DATABASE:
+      currentUser = { name, phone };
+      const savedUsers = JSON.parse(localStorage.getItem("appUsers")) || [];
+      savedUsers.push(currentUser);
+      localStorage.setItem("appUsers", JSON.stringify(savedUsers));
+      localStorage.setItem("currentUser", JSON.stringify(currentUser));
+
+      updateAuthUI();
+      hideModal(authModal);
+      signupForm.reset();
+    } catch (error) {
+      console.error("Signup Failed:", error);
+      alert("Error creating account. Please try again.");
+    }
+  });
+}
+
+
+// ==========================================
+// 5. SHOPPING CART & PRODUCT RENDERING
+// ==========================================
 function saveCart() {
   localStorage.setItem("donutCart", JSON.stringify(cart));
+}
+
+function getTotal() {
+  return cart.reduce((total, item) => {
+    const product = products.find(p => p.id === item.id);
+    return total + (product ? product.price * item.quantity : 0);
+  }, 0);
+}
+
+function getItemCount() {
+  return cart.reduce((total, item) => total + item.quantity, 0);
 }
 
 function renderProducts(category = "all") {
@@ -87,51 +297,6 @@ function renderProducts(category = "all") {
   `).join("");
 }
 
-function addToCart(id) {
-  const existing = cart.find(item => item.id === id);
-
-  if (existing) {
-    existing.quantity++;
-  } else {
-    cart.push({ id, quantity: 1 });
-  }
-
-  saveCart();
-  renderCart();
-  openCart();
-}
-
-function changeQuantity(id, amount) {
-  const item = cart.find(item => item.id === id);
-  if (!item) return;
-
-  item.quantity += amount;
-
-  if (item.quantity <= 0) {
-    cart = cart.filter(item => item.id !== id);
-  }
-
-  saveCart();
-  renderCart();
-}
-
-function removeFromCart(id) {
-  cart = cart.filter(item => item.id !== id);
-  saveCart();
-  renderCart();
-}
-
-function getTotal() {
-  return cart.reduce((total, item) => {
-    const product = products.find(product => product.id === item.id);
-    return total + (product ? product.price * item.quantity : 0);
-  }, 0);
-}
-
-function getItemCount() {
-  return cart.reduce((total, item) => total + item.quantity, 0);
-}
-
 function renderCart() {
   cartCount.textContent = getItemCount();
 
@@ -139,7 +304,7 @@ function renderCart() {
     cartItems.innerHTML = `<p class="text-center text-[#999] mt-20 text-sm">Your cart is empty.<br>Go pick a doughnut!</p>`;
   } else {
     cartItems.innerHTML = cart.map(item => {
-      const product = products.find(product => product.id === item.id);
+      const product = products.find(p => p.id === item.id);
       if (!product) return "";
 
       return `
@@ -168,6 +333,37 @@ function renderCart() {
   checkoutTotal.textContent = peso(getTotal());
 }
 
+function addToCart(id) {
+  const existing = cart.find(item => item.id === id);
+  if (existing) {
+    existing.quantity++;
+  } else {
+    cart.push({ id, quantity: 1 });
+  }
+  saveCart();
+  renderCart();
+  openCart();
+}
+
+function changeQuantity(id, amount) {
+  const item = cart.find(item => item.id === id);
+  if (!item) return;
+
+  item.quantity += amount;
+  if (item.quantity <= 0) {
+    cart = cart.filter(item => item.id !== id);
+  }
+
+  saveCart();
+  renderCart();
+}
+
+function removeFromCart(id) {
+  cart = cart.filter(item => item.id !== id);
+  saveCart();
+  renderCart();
+}
+
 function openCart() {
   cartDrawer.classList.remove(...DRAWER_CLOSED);
   cartDrawer.classList.add(...DRAWER_OPEN);
@@ -184,20 +380,117 @@ function closeCart() {
   document.body.style.overflow = "";
 }
 
-function showModal(modal) {
-  modal.classList.remove(...BACKDROP_HIDDEN);
-  modal.classList.add(...BACKDROP_VISIBLE);
-  document.body.style.overflow = "hidden";
+
+// ==========================================
+// 6. CHECKOUT & ORDER SUBMISSION
+// ==========================================
+
+// Open Checkout Modal & Auto-fill inputs if logged in
+if (checkoutBtn) {
+  checkoutBtn.addEventListener("click", () => {
+    if (cart.length === 0) {
+      alert("Your cart is empty. Add some doughnuts first!");
+      return;
+    }
+
+    const nameInput = document.getElementById("customerName");
+    const contactInput = document.getElementById("customerContact");
+
+    if (currentUser) {
+      if (nameInput) {
+        nameInput.value = currentUser.name;
+        nameInput.readOnly = true;
+        nameInput.classList.add("bg-gray-100", "cursor-not-allowed");
+      }
+      if (contactInput) {
+        contactInput.value = currentUser.phone;
+        contactInput.readOnly = true;
+        contactInput.classList.add("bg-gray-100", "cursor-not-allowed");
+      }
+    } else {
+      if (nameInput) {
+        nameInput.readOnly = false;
+        nameInput.classList.remove("bg-gray-100", "cursor-not-allowed");
+      }
+      if (contactInput) {
+        contactInput.readOnly = false;
+        contactInput.classList.remove("bg-gray-100", "cursor-not-allowed");
+      }
+    }
+
+    checkoutTotal.textContent = peso(getTotal());
+    showModal(checkoutModal);
+  });
 }
 
-function hideModal(modal) {
-  modal.classList.remove(...BACKDROP_VISIBLE);
-  modal.classList.add(...BACKDROP_HIDDEN);
-  document.body.style.overflow = "";
-}
+// Order Type Selection Logic (Delivery vs Pickup)
+document.getElementById("orderType")?.addEventListener("change", (event) => {
+  const address = document.getElementById("customerAddress");
+  if (!address) return;
+  
+  if (event.target.value === "Delivery") {
+    address.required = true;
+    address.placeholder = "Enter your delivery address";
+  } else {
+    address.required = false;
+    address.placeholder = "Address is optional for pickup";
+  }
+});
 
-// Mobile Navbar Toggle Logic
-mobileMenuBtn.addEventListener("click", () => {
+// Submit Order Form
+document.getElementById("checkoutForm")?.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const name = document.getElementById("customerName").value.trim();
+
+  // -------------------------------------------------------------
+  // 💾 DATABASE INTEGRATION POINT: SUBMIT ORDER TO BACKEND
+  // -------------------------------------------------------------
+  // Send order details to backend server / database:
+  // const orderPayload = {
+  //   userId: currentUser ? currentUser.id : null,
+  //   customerName: name,
+  //   contact: document.getElementById("customerContact").value.trim(),
+  //   orderType: document.getElementById("orderType").value,
+  //   address: document.getElementById("customerAddress").value.trim(),
+  //   paymentMethod: document.getElementById("paymentMethod").value,
+  //   cartItems: cart,
+  //   totalPrice: getTotal()
+  // };
+  // await fetch('/api/orders', {
+  //   method: 'POST',
+  //   headers: { 'Content-Type': 'application/json' },
+  //   body: JSON.stringify(orderPayload)
+  // });
+  // -------------------------------------------------------------
+
+  document.getElementById("successName").textContent = name || "customer";
+
+  hideModal(checkoutModal);
+  closeCart();
+  showModal(successModal);
+
+  // Clear local cart state
+  cart = [];
+  saveCart();
+  renderCart();
+  event.target.reset();
+});
+
+// Modal Dismiss Controls
+document.getElementById("closeCheckout")?.addEventListener("click", () => hideModal(checkoutModal));
+document.getElementById("finishOrder")?.addEventListener("click", () => hideModal(successModal));
+
+checkoutModal?.addEventListener("click", (e) => { if (e.target === checkoutModal) hideModal(checkoutModal); });
+successModal?.addEventListener("click", (e) => { if (e.target === successModal) hideModal(successModal); });
+
+
+// ==========================================
+// 7. EVENT LISTENERS & INITIALIZATION
+// ==========================================
+
+// Mobile Navbar Controls
+mobileMenuBtn?.addEventListener("click", () => {
   const isHidden = mobileMenu.classList.contains("hidden");
   if (isHidden) {
     mobileMenu.classList.remove("hidden");
@@ -218,10 +511,12 @@ document.querySelectorAll(".mobile-nav-link").forEach(link => {
   });
 });
 
-document.getElementById("openCart").addEventListener("click", openCart);
-document.getElementById("closeCart").addEventListener("click", closeCart);
-cartBackdrop.addEventListener("click", closeCart);
+// Drawer Triggers
+document.getElementById("openCart")?.addEventListener("click", openCart);
+document.getElementById("closeCart")?.addEventListener("click", closeCart);
+cartBackdrop?.addEventListener("click", closeCart);
 
+// Category Tab Filters
 document.querySelectorAll(".category-tabs button").forEach(button => {
   button.addEventListener("click", () => {
     const activeButton = document.querySelector(".category-tabs button.active");
@@ -235,63 +530,7 @@ document.querySelectorAll(".category-tabs button").forEach(button => {
   });
 });
 
-document.getElementById("checkoutButton").addEventListener("click", () => {
-  if (cart.length === 0) {
-    alert("Your cart is empty. Add some doughnuts first!");
-    return;
-  }
-
-  checkoutTotal.textContent = peso(getTotal());
-  showModal(checkoutModal);
-});
-
-document.getElementById("closeCheckout").addEventListener("click", () => {
-  hideModal(checkoutModal);
-});
-
-document.getElementById("orderType").addEventListener("change", (event) => {
-  const address = document.getElementById("customerAddress");
-  if (event.target.value === "Delivery") {
-    address.required = true;
-    address.placeholder = "Enter your delivery address";
-  } else {
-    address.required = false;
-    address.placeholder = "Address is optional for pickup";
-  }
-});
-
-document.getElementById("checkoutForm").addEventListener("submit", (event) => {
-  event.preventDefault();
-
-  const name = document.getElementById("customerName").value.trim();
-
-  document.getElementById("successName").textContent = name || "customer";
-
-  hideModal(checkoutModal);
-  closeCart();
-  showModal(successModal);
-
-  cart = [];
-  saveCart();
-  renderCart();
-  event.target.reset();
-});
-
-document.getElementById("finishOrder").addEventListener("click", () => {
-  hideModal(successModal);
-});
-
-checkoutModal.addEventListener("click", (event) => {
-  if (event.target === checkoutModal) {
-    hideModal(checkoutModal);
-  }
-});
-
-successModal.addEventListener("click", (event) => {
-  if (event.target === successModal) {
-    hideModal(successModal);
-  }
-});
-
+// Initial Page Load Execution
 renderProducts();
 renderCart();
+updateAuthUI();
